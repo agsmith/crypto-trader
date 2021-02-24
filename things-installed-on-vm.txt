@@ -2,3 +2,4 @@ pip
 gdax
 blackbox
 gpg
+sudo pip3 install python-binance

@@ -2,4 +2,7 @@
 /keyrings/live/pubring.kbx~
 /keyrings/live/secring.gpg
 /crypto-trader-e6f365385904.json
+/.idea/*
 /.gdax
+/.binance
+/appconfig.py
