@@ -2,43 +2,66 @@
 # -*- coding: utf-8 -*-
 
 from patterns.commons import *
+from book.business import *
 
 
-def identify_bullish_patterns(compound):
-    hammer(compound.day1)
-    inverted_hammer(compound.day1)
-    white_soldiers(compound)
-    bullish_harami(compound)
+def identify_bullish_patterns(book, compound, pricing_model):
+    book = hammer(book, compound.candle1, pricing_model)
+    book = inverted_hammer(book, compound.candle1, pricing_model)
+    book = white_soldiers(book, compound, pricing_model)
+    book = bullish_harami(book, compound, pricing_model)
+    return book
 
 
-def inverted_hammer(row):
-    if green(row):
-        if upper_wick(True, row) >= (body_size(True, row) * 2):
-            if lower_wick(True, row) <=(body_size(True, row) * .5):
-                print("Inverted Hammer at " + row.dt)
+def inverted_hammer(book, candle, pricing_model):
+    if green(candle):
+        if upper_wick(True, candle) >= (body_size(True, candle) * 2):
+            if lower_wick(True, candle) <=(body_size(True, candle) * .5):
+                print_pattern("[BULL] Inverted Hammer", candle)
+                return bear_to_bull(candle, book, pricing_model)
+            else: return book
+        else: return book
+    else: return book
 
 
-def hammer(row):
-    if green(row):
-        if lower_wick(True, row) >= (body_size(True, row) * 2):
-            if upper_wick(True, row) <=(body_size(True, row) * .5):
-                print("Hammer at " + row.dt)
+def hammer(book, candle, pricing_model):
+    if green(candle):
+        if lower_wick(True, candle) >= (body_size(True, candle) * 2):
+            if upper_wick(True, candle) <=(body_size(True, candle) * .5):
+                print_pattern("[BULL] Hammer", candle)
+                return bear_to_bull(candle, book, pricing_model)
+            else: return book
+        else: return book
+    else: return book
 
 
-def white_soldiers(compound):
-    if(green(compound.day1)):
-        if(green(compound.day2)):
-            if(green(compound.day3)):
-                if compound.day1.o > compound.day2.o:
-                    if compound.day2.o > compound.day3.o:
-                        if compound.day1.c > compound.day2.c:
-                            if compound.day2.c > compound.day3.c:
-                                print("White Soldiers on " + compound.day1.dt)
+def white_soldiers(book, compound, pricing_model):
+    if(green(compound.candle1)):
+        if(green(compound.candle2)):
+            if(green(compound.candle3)):
+                if compound.candle1.o > compound.candle2.o:
+                    if compound.candle2.o > compound.candle3.o:
+                        if compound.candle1.c > compound.candle2.c:
+                            if compound.candle2.c > compound.candle3.c:
+                                print_pattern("[BULL] White Soldiers", compound.candle1)
+                                return bear_to_bull(compound.candle1, book, pricing_model)
+                            else: return book
+                        else: return book
+                    else: return book
+                else: return book
+            else: return book
+        else: return book
+    else: return book
 
-def bullish_harami(compound):
-    if(green(compound.day1)):
-        if(red(compound.day2)):
-            if(compound.day1.o > compound.day2.c):
-                if(compound.day1.c < compound.day2.o):
-                    print("Bullish Harami on " + compound.day1.dt)
+def bullish_harami(book, compound, pricing_model):
+    if(green(compound.candle1)):
+        if(red(compound.candle2)):
+            if(compound.candle1.o > compound.candle2.c):
+                if(compound.candle1.c < compound.candle2.o):
+                    print_pattern("[BULL] Bullish Harami", compound.candle1)
+                    return bear_to_bull(compound.candle1, book, pricing_model)
+                else: return book
+            else: return book
+        else: return book
+    else: return book
 

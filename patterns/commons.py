@@ -1,50 +1,58 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-class HistoricalData:
-    def __init__(self, o: float, c: float, h: float, l: float, dt: str):
+class Candle:
+    def __init__(self, s: str, o: float, c: float, h: float, l: float, dt: str, u: str):
+        self.s = s
         self.o = o
         self.c = c
         self.h = h
         self.l = l
         self.dt = dt
+        self.u = u
 
 
-class TwoDayHistoricalData:
-    def __init__(self, day1: HistoricalData, day2: HistoricalData):
-        self.day1 = day1
-        self.day2 = day2
+class TwoCandles:
+    def __init__(self, candle1: Candle, candle2: Candle):
+        self.candle1 = candle1
+        self.candle2 = candle2
 
 
-class ThreeDayHistoricalData:
-    def __init__(self, day1: HistoricalData, day2: HistoricalData, day3: HistoricalData):
-        self.day1 = day1
-        self.day2 = day2
-        self.day3 = day3
+class ThreeCandles:
+    def __init__(self, candle1: Candle, candle2: Candle, candle3: Candle):
+        self.candle1 = candle1
+        self.candle2 = candle2
+        self.candle3 = candle3
 
 
-def green(row):
-    return (row.c >= row.o)
+def print_pattern(pattern, candle):
+    print(pattern + " for " + candle.s + " on " + candle.dt)
 
-def red(row):
-    return (row.o > row.c)
 
-def lower_wick(green, row):
+def green(candle):
+    return candle.c >= candle.o
+
+
+def red(candle):
+    return candle.o > candle.c
+
+
+def lower_wick(green, candle):
     if green:
-        return row.o - row.l
+        return candle.o - candle.l
     else:
-        return row.c - row.l
+        return candle.c - candle.l
 
-def upper_wick(green, row):
+
+def upper_wick(green, candle):
     if green:
-        return row.h-row.c
+        return candle.h - candle.c
     else:
-        return row.h-row.o
+        return candle.h - candle.o
 
 
-def body_size(green, row):
+def body_size(green, candle):
     if green:
-        return row.c - row.o
+        return candle.c - candle.o
     else:
-        return row.o -row.c
-
+        return candle.o - candle.c

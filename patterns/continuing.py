@@ -5,11 +5,11 @@ from patterns.commons import *
 
 
 def identify_continuing_patterns(compound):
-    identify_doji(compound.day1)
+    identify_doji(compound.candle1)
 
 
-def identify_doji(row):
-    if green(row):
-        if upper_wick(True, row) == lower_wick(True, row):
-            if body_size(True, row) >= (row.o * 0.001):
-                print("Doji at " + row.dt)
+def identify_doji(candle):
+    if green(candle):
+        if upper_wick(True, candle) == lower_wick(True, candle):
+            if body_size(True, candle) >= (candle.o * 0.001):
+                print("Doji at " + candle.dt)

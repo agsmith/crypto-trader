@@ -2,43 +2,66 @@
 # -*- coding: utf-8 -*-
 
 from patterns.commons import *
+from book.business import *
 
 
-def identify_bearish_patterns(compound):
-    hanging_man(compound.day1)
-    shooting_star(compound.day1)
-    black_crows(compound)
-    bearish_harami(compound)
+def identify_bearish_patterns(book, compound, pricing_model):
+    book = hanging_man(book, compound.candle1, pricing_model)
+    book = shooting_star(book, compound.candle1, pricing_model)
+    book = black_ccandles(book, compound, pricing_model)
+    book = bearish_harami(book, compound, pricing_model)
+    return book
 
 
-def hanging_man(row):
-    if red(row): # Red
-        if lower_wick(False, row) >= (body_size(False, row) * 2): # big lower wick
-            if upper_wick(False, row) <= (body_size(False, row) * .5): # small upper wick
-                print("Hanging Man at " + row.dt)
+def hanging_man(book, candle, pricing_model):
+    if red(candle): # Red
+        if lower_wick(False, candle) >= (body_size(False, candle) * 2): # big lower wick
+            if upper_wick(False, candle) <= (body_size(False, candle) * .5): # small upper wick
+                print_pattern("[BEAR] Hanging Man", candle)
+                return bull_to_bear(candle, book, pricing_model)
+            else: return book
+        else: return book
+    else: return book
 
 
-def shooting_star(row):
-    if red(row):
-        if upper_wick(False, row) >= (body_size(False, row) * 2): # big upper wick
-            if lower_wick(False, row) <= (body_size(False, row) * .5):  # small lower wick
-                print("Shooting Star at " + row.dt)
+def shooting_star(book, candle, pricing_model):
+    if red(candle):
+        if upper_wick(False, candle) >= (body_size(False, candle) * 2): # big upper wick
+            if lower_wick(False, candle) <= (body_size(False, candle) * .5):  # small lower wick
+                print_pattern("[BEAR] Shooting Star", candle)
+                return bull_to_bear(candle, book, pricing_model)
+            else: return book
+        else: return book
+    else: return book
 
 
-def black_crows(compound):
-    if(red(compound.day1)):
-        if(red(compound.day2)):
-            if(red(compound.day3)):
-                if compound.day1.o < compound.day2.o:
-                    if compound.day2.o < compound.day3.o:
-                        if compound.day1.c < compound.day2.c:
-                            if compound.day2.c < compound.day3.c:
-                                print("Black Crows on " + compound.day1.dt)
+def black_ccandles(book, compound, pricing_model):
+    if red(compound.candle1):
+        if red(compound.candle2):
+            if red(compound.candle3):
+                if compound.candle1.o < compound.candle2.o:
+                    if compound.candle2.o < compound.candle3.o:
+                        if compound.candle1.c < compound.candle2.c:
+                            if compound.candle2.c < compound.candle3.c:
+                                print_pattern("[BEAR] Black Crows", compound.candle1)
+                                return bull_to_bear(compound.candle1, book, pricing_model)
+                            else: return book
+                        else: return book
+                    else: return book
+                else: return book
+            else: return book
+        else: return book
+    else: return book
 
 
-def bearish_harami(compound):
-    if(red(compound.day1)):
-        if(green(compound.day2)):
-            if(compound.day1.o < compound.day2.c):
-                if(compound.day1.c > compound.day2.o):
-                    print("Bearish Harami on " + compound.day1.dt)
+def bearish_harami(book, compound, pricing_model):
+    if red(compound.candle1):
+        if green(compound.candle2):
+            if compound.candle1.o < compound.candle2.c:
+                if compound.candle1.c > compound.candle2.o:
+                    print_pattern("[BEAR] Bearish Harami", compound.candle1)
+                    return bull_to_bear(compound.candle1, book, pricing_model)
+                else: return book
+            else: return book
+        else: return book
+    else: return book
