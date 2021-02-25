@@ -6,3 +6,4 @@
 /.gdax
 /.binance
 /appconfig.py
+/__pycache__
