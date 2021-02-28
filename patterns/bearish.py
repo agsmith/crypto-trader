@@ -8,7 +8,7 @@ from book.business import *
 def identify_bearish_patterns(book, compound, pricing_model):
     book = hanging_man(book, compound.candle1, pricing_model)
     book = shooting_star(book, compound.candle1, pricing_model)
-    book = black_ccandles(book, compound, pricing_model)
+    book = black_crows(book, compound, pricing_model)
     book = bearish_harami(book, compound, pricing_model)
     return book
 
@@ -35,7 +35,7 @@ def shooting_star(book, candle, pricing_model):
     else: return book
 
 
-def black_ccandles(book, compound, pricing_model):
+def black_crows(book, compound, pricing_model):
     if red(compound.candle1):
         if red(compound.candle2):
             if red(compound.candle3):
