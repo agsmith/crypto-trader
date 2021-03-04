@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/crypto-trader.iml" filepath="$PROJECT_DIR$/.idea/crypto-trader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/quantegy.iml" filepath="$PROJECT_DIR$/.idea/quantegy.iml" />
     </modules>
   </component>
 </project>
