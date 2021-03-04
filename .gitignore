@@ -1,6 +1,6 @@
-/keyrings/live/pubring.gpg~
-/keyrings/live/pubring.kbx~
-/keyrings/live/secring.gpg
+/old/keyrings/live/pubring.gpg~
+/old/keyrings/live/pubring.kbx~
+/old/keyrings/live/secring.gpg
 /crypto-trader-e6f365385904.json
 /.idea/*
 /.gdax
